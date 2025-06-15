@@ -1,0 +1,26 @@
+data:
+  # 数据相关参数
+  data_dir: "./forced_move"        # 数据集存放路径
+  time_steps: 1                    # 用于预测的前序时间步长度
+
+model:
+  # 模型结构配置
+  in_channels: 3                   # 输入数据的通道数（例如流场的物理量通道）
+  num_layers: 12                   # 编码器和解码器中卷积与反卷积层的总层数
+  kernel_size: 4                   # 每个卷积和反卷积操作的卷积核大小
+  num_convlstm_layers: 1           # 内部 ConvLSTM 层的数量，用于时序信息建模
+
+optimizer:
+  # 优化器与训练过程配置
+  lr: 0.001                        # 学习率，用于控制参数更新步长
+  epochs: 100                      # 总训练轮数（epoch 数）
+  eval_interval: 10                # 每隔多少个 epoch 在验证集上评估一次模型
+  save_ckpt_interval: 10           # 每隔多少个 epoch 保存一次模型检查点
+  ckpt_dir: "./ckpt_dir"           # 模型检查点（.ckpt 文件）保存目录
+
+prediction:
+  # 推理（预测）过程配置
+  data_dir: "./forced_move/f0.90h0.45"       # 用于预测的数据集存放路径
+  ckpt_path: "./ckpt_dir/net_100.ckpt"       # 进行预测时加载的模型检查点路径
+  prediction_result_dir: "./save_prediction" # 单步预测结果保存目录
+  pred_continue_dir: "./save_prediction_continue"  # 循环（多步）预测结果保存目录
